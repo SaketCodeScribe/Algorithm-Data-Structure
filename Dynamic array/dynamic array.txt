@@ -1,0 +1,35 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int myXOR(int x, int y) 
+{ 
+   return (x^y); 
+} 
+
+int main(){
+    long int temp, q, ch, x, y, n, rem, last_ans=0;
+    cin>>n>>q;
+    vector<vector<int> >seqlist(n);
+    while(q--){
+        cin>>ch;
+        switch(ch){
+            case 1:
+                cin>>x>>y;
+                temp=(myXOR(x, last_ans))%n;
+                //cout<<"*"<<temp<<endl;
+                seqlist[temp].push_back(y);
+                break;
+            case 2:
+                cin>>x>>y;
+                temp=(myXOR(x, last_ans))%n;
+                //cout<<"**"<<temp<<endl;
+                last_ans=seqlist[temp][y%(seqlist[temp].size())];
+                cout<<last_ans<<endl;
+                break;
+            default:
+                cout<<"Wrong Input"<<endl;
+                break;
+        }
+    }
+}

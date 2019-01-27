@@ -1,0 +1,35 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+long int Count(long int x){
+    long int c=0,i;
+    i=pow(10,c);
+    while(x/i!=0){
+        c++;
+        i=pow(10,c);
+    }
+    //cout<<"1. "<<c<<endl;
+    return c;
+}
+
+long int mult(long int x,long int y,long int n){
+    long int ac,bd,mid,q;
+    if(n==1)
+    return x*y;
+    if(n%2==0)
+    q=pow(10,n/2);
+    else q=pow(10,1+n/2);
+    ac=mult(x/q,y/q,max(Count(x/q),Count(y/q)));
+    bd=mult(x%q,y%q,max(Count(x%q),Count(y%q)));    
+    mid=mult(x/q+x%q,y/q+y%q,max(Count(x/q+x%q),Count(y/q+y%q)))-ac-bd;
+    if(n%2==0)
+    return ac*pow(10,n)+mid*pow(10,n/2)+bd;
+    else return ac*pow(10,2*(1+n/2))+mid*pow(10,1+n/2)+bd;
+}
+
+int main() {
+	long int x,y;
+	cin>>x>>y;
+	cout<<mult(x,y,max(Count(x),Count(y)));
+	return 0;
+}
