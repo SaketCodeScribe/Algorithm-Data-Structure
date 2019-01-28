@@ -1,0 +1,64 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void merge(vector<int> &arr,int l,int m,int r){
+    vector<int> L;
+    vector<int> R;
+    int i,j,c=l;
+    for(i=l;i<=m;i++)
+    L.push_back(arr[i]);
+    for(i=m+1;i<=r;i++)
+    R.push_back(arr[i]);
+    for(i=0,j=0;i<L.size()&&j<R.size();){
+        if(L[i]<R[j]){
+            arr[c]=L[i];
+            c++;
+            i++;
+        }
+        else{
+            arr[c]=R[j];
+            c++;
+            j++;
+        }
+    }
+    while(i<L.size()){
+        arr[c]=L[i];
+        c++;
+        i++;
+    }
+    while(j<R.size()){
+        arr[c]=R[j];
+        c++;
+        j++;
+    }
+}
+
+void mergesort(vector<int> &arr,int l,int r){
+    int mid;
+    if(l<r){
+        mid=l+(r-l)/2;
+        mergesort(arr,l,mid);
+        mergesort(arr,mid+1,r);
+        merge(arr,l,mid,r);
+    }
+}
+
+int main() {
+	int x,n,i;
+	vector<int> arr;
+	cin>>n;
+	for(i=0;i<n;i++){
+	    cin>>x;
+	    arr.push_back(x);
+	}
+	cout<<"Unsorted array: ";
+	for(i=0;i<n;i++)
+	cout<<arr[i]<<" ";
+	cout<<endl;
+	mergesort(arr,0,n-1);
+	cout<<"Sorted array: ";
+	for(i=0;i<n;i++)
+	cout<<arr[i]<<" ";
+	cout<<endl;
+	return 0;
+}
