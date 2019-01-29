@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int partition(vector<int> &arr,int p,int r){
+    int i=p,j,temp;
+    for(j=p+1;j<=r;j++){
+        if(arr[j]<=arr[p]){
+            i++;
+            temp=arr[i];
+            arr[i]=arr[j];
+            arr[j]=temp;
+        }
+    }
+    temp=arr[i];
+    arr[i]=arr[p];
+    arr[p]=temp;
+    return i;
+}
+
+void quicksort(vector<int> &arr,int l,int r){
+    int pi;
+    if(l<r){
+        pi=partition(arr,l,r);
+        quicksort(arr,l,pi-1);
+        quicksort(arr,pi+1,r);
+    }
+}
+
+int main() {
+	int x,n,i;
+	vector<int> arr;
+	cin>>n;
+	for(i=0;i<n;i++){
+	    cin>>x;
+	    arr.push_back(x);
+	}
+	cout<<"Unsorted array: ";
+	for(i=0;i<n;i++)
+	cout<<arr[i]<<" ";
+	cout<<endl;
+	quicksort(arr,0,n-1);
+	cout<<"Sorted array: ";
+	for(i=0;i<n;i++)
+	cout<<arr[i]<<" ";
+	cout<<endl;
+	return 0;
+}
