@@ -1,0 +1,21 @@
+#include<bits/stdc++.h>
+#include<algorithm>
+using namespace std;
+
+int main(){
+    long int i, n, m, a, b, k, max=-1000;
+    cin>>n>>m;
+    long int *arr=new long int[n+1](), *prefix_sum=new long int[n+1]();
+    for(i=1; i<=m; i++){
+        cin>>a>>b>>k;
+        arr[a]+=k;
+        if(b+1<=n)
+            arr[b+1]+=-k;
+    }
+    for(i=1; i<=n; i++){
+        prefix_sum[i]=prefix_sum[i-1]+arr[i];
+        if(prefix_sum[i]>max)
+            max=prefix_sum[i];
+    }
+    cout<<max;
+}
