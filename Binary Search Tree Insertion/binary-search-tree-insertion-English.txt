@@ -1,0 +1,84 @@
+#include <iostream>
+#include <cstddef>
+	
+class Node {
+    public:
+        int data;
+        Node *left;
+        Node *right;
+        Node(int d) {
+            data = d;
+            left = NULL;
+            right = NULL;
+        }
+};
+
+class Solution {
+    public:
+  
+    void preOrder(Node *root) {
+
+          if( root == NULL )
+              return;
+
+          std::cout << root->data << " ";
+
+          preOrder(root->left);
+          preOrder(root->right);
+      }
+
+Node * insert(Node * root, int data) {
+    Node* l= new Node(data);
+    Node* temp;
+    Node* x;
+    temp=NULL;
+    if(root==NULL)
+        root=l;
+    else{
+        x=Find(root,data);
+        if(x->data != data){
+            if(data <= x->data)
+                x->left=l;
+            else x->right=l;
+        }
+        else if(x->data == data){
+            temp=x->left;
+            x->left=l;
+            l->left=temp;
+        }
+    }
+    return root;
+}
+
+Node* Find(Node * root, int key){
+    if(root->data==key)
+        return root;
+    if(root->data<key){
+        if(root->right!=NULL)
+            root=Find(root->right, key);
+    }
+    else {
+        if(root->left!=NULL)
+            root=Find(root->left, key);
+    }
+    return root;
+}
+}; //End of Solution
+
+int main() {
+    
+    Solution myTree;
+    Node* root = NULL;
+    
+    int t;
+    int data;
+
+    std::cin >> t;
+
+    while(t-- > 0) {
+        std::cin >> data;
+        root = myTree.insert(root, data);
+    }
+	myTree.preOrder(root);
+    return 0;
+}
