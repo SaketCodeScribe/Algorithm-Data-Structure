@@ -1,0 +1,116 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+class Node {
+    public:
+        int data;
+        Node *left;
+        Node *right;
+        Node(int d) {
+            data = d;
+            left = NULL;
+            right = NULL;
+        }
+};
+
+class Solution {
+    public:
+  		Node* insert(Node* root, int data) {
+            if(root == NULL) {
+                return new Node(data);
+            } else {
+                Node* cur;
+                if(data <= root->data) {
+                    cur = insert(root->left, data);
+                    root->left = cur;
+                } else {
+                    cur = insert(root->right, data);
+                    root->right = cur;
+               }
+
+               return root;
+           }
+        }
+
+
+vector<int > p1;
+vector<int >p2;
+
+Node *lca(Node *root, int v1,int v2) {
+    int i, a;
+    Node* x;
+    parent(root,p1,v1);
+    parent(root,p2,v2);
+    if(p1.size()>p2.size()){
+        for(i=p2.size()-1;i>=0;i--)
+            if(p1[i]==p2[i]){
+                a=p1[i];
+                x=Find(root,a);
+                break;
+            }
+    }
+    else if(p2.size()>p1.size()){
+        for(i=p1.size()-1;i>=0;i--)
+            if(p1[i]==p2[i]){
+                a=p1[i];
+                x=Find(root,a);
+                break;
+            }
+    }
+    else{
+        for(i=p1.size()-1;i>=0;i--)
+            if(p1[i]==p2[i]){
+                a=p1[i];
+                x=Find(root,a);
+                break;
+            }
+    }
+    return x;
+}
+
+void parent(Node* root, vector<int >& p, int v){
+    p.push_back(root->data);
+    if(root->data==v)
+        return;
+    if(root->data<v)
+        parent(root->right, p, v);
+    else 
+        parent(root->left, p, v);
+}
+
+Node* Find(Node* root, int a){
+    if(root->data==a)
+        return root;
+    if(root->data<a)
+        root= Find(root->right, a);
+    else 
+        root= Find(root->left, a);
+    return root;
+}
+}; //End of Solution
+
+int main() {
+  
+    Solution myTree;
+    Node* root = NULL;
+    
+    int t;
+    int data;
+
+    std::cin >> t;
+
+    while(t-- > 0) {
+        std::cin >> data;
+        root = myTree.insert(root, data);
+    }
+  	
+  	int v1, v2;
+  	std::cin >> v1 >> v2;
+  
+    Node *ans = myTree.lca(root, v1, v2);
+    
+  	std::cout << ans->data;
+
+    return 0;
+}
