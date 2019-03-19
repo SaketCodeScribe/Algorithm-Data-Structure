@@ -1,0 +1,77 @@
+/* Node is defined as :
+typedef struct node
+{
+    int val;
+    struct node* left;
+    struct node* right;
+    int ht;
+} node; */
+
+int Ht(node* root){
+    if(root==NULL)
+        return -1;
+    return root->ht;
+}
+
+int balancefactor(node* root){
+    return Ht(root->left)-Ht(root->right);
+}
+
+void AdjustHt(node* root){
+    root->ht=1+max(Ht(root->left),Ht(root->right));
+}
+
+node* rightrotate(node* y){
+    node* x=y->left;
+    node* T2=x->right;
+    x->right=y;
+    y->left=T2;
+    y->ht=1+max(Ht(y->left),Ht(y->right));
+    x->ht=1+max(Ht(x->left),Ht(x->right));
+    return x;
+}
+
+node* leftrotate(node* x){
+    node* y=x->right;
+    node* T2=y->left;
+    y->left=x;
+    x->right=T2;
+    x->ht=1+max(Ht(x->left),Ht(x->right));
+    y->ht=1+max(Ht(y->left),Ht(y->right));
+    return y;
+}
+
+node * insert(node * root,int data){
+    int getbal;
+    if(root==NULL){
+        node* x=new node;
+        x->val=data;
+        x->left=NULL;
+        x->right=NULL;
+        x->ht=0;
+        return x;
+    }
+    if(root->val<data)
+            root->right=insert(root->right,data);
+    if(root->val>data)
+        root->left=insert(root->left,data);
+    if(root->val==data)
+        return root;
+    AdjustHt(root);
+    getbal=balancefactor(root);
+    //cout<<getbal<<" ";
+    if(getbal>1 && data<root->left->val)
+        return rightrotate(root);
+    if(getbal<-1 && data>root->right->val)
+        return leftrotate(root);
+    if(getbal>1 && data>root->left->val){
+        root->left=leftrotate(root->left);
+        return rightrotate(root);
+    }
+    if(getbal<-1 && data<root->right->val){
+        root->right=rightrotate(root->right);
+        return leftrotate(root);
+    }
+    //cout<<getbal<<" "<<endl;
+    return root;
+}
