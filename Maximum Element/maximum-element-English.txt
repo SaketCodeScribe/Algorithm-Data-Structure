@@ -1,0 +1,53 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+struct node{
+    int data;
+    node* next;
+};
+
+node* push(node* head, long int x){
+    node* n;
+    node* temp;
+    temp=head;
+    n=new node;
+    n->data=x;
+    n->next=NULL;
+    head=n;
+    head->next=temp;
+    return head;
+}
+
+
+node* pop(node* head){
+    head=head->next;
+    return head;
+}
+
+int main() {
+    long int i, n, a, x, max1;
+    cin>>n;
+    node* head=NULL;
+    for(i=0; i<n; i++){
+        cin>>a;
+        if(a==1){
+            cin>>x;  
+            if(head==NULL)
+                head=push(head, x);
+            else {
+                if(x>=head->data)
+                    head=push(head, x);
+                else head=push(head, head->data);
+            }
+        }
+        else if(a==2){
+            head=pop(head);
+        }
+        else cout<<head->data<<endl;
+    }
+    return 0;
+}

@@ -1,0 +1,92 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+void ShiftDown(vector<long int>&, int);
+void ShiftUp(vector<long int>&, int);
+void Remove(vector<long int>&, int);
+void Getmin(vector<long int>&);
+
+int main() {
+    vector<long int> a;
+    int x, q, ch;
+    cin>>q;
+    while(q--){
+        cin>>ch;
+        switch(ch){
+            case 1:
+                cin>>x;
+                a.push_back(x);
+                ShiftUp(a, a.size()-1);
+                break;
+            case 2:
+                cin>>x;
+                Remove(a, x);
+                break;
+            case 3:
+                Getmin(a);
+                break;
+            default:
+                cout<<"wrong Choice"<<endl;
+                break;
+        }
+    }
+    return 0;
+}
+
+void ShiftUp(vector<long int>& a, int i){
+    int temp;
+    if(i==0)
+        return;
+    else {
+        if(a[(i-1)/2]>a[i]){
+        temp=a[(i-1)/2];
+        a[(i-1)/2]=a[i];
+        a[i]=temp;
+        ShiftUp(a,(i-1)/2);
+        }
+    }
+}
+
+void ShiftDown(vector<long int>& a, int i=0){
+    int min_index;
+    int temp;
+    min_index=i;
+    int l=2*i+1;
+    if(l<a.size() && a[min_index]>a[l])
+        min_index=l;
+    int r=2*i+2;
+    if(r<a.size() && a[min_index]>a[r])
+        min_index=r;
+    if(min_index==i)
+        return;
+    else{
+        temp=a[i];
+        a[i]=a[min_index];
+        a[min_index]=temp;
+        ShiftDown(a, min_index);
+    }
+}
+
+void Remove(vector<long int>& a, int x){
+    int i, temp;
+    for(i=0; i<a.size();i++){
+        if(a[i]==x){
+            a[i]=-2147483648;
+            ShiftUp(a, i);
+            temp=a[0];
+            a[0]=a[a.size()-1];
+            a[a.size()-1]=temp;
+            a.resize(a.size()-1);
+            ShiftDown(a);
+            break;
+        }
+    }
+}
+
+void Getmin(vector<long int>& a){
+    cout<<a[0]<<endl;
+}

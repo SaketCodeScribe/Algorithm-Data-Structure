@@ -1,0 +1,66 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+void Union(vector<long int >&, vector<long int >&, long int, long int);
+long int Find(vector<long int >&, long int);
+
+vector<long int> size;
+
+int main() {
+    long int n, i, q, i_id, j_id, a;
+    char ch;
+    vector<long int > parent;
+    vector<long int > rank;
+    parent.push_back(0);
+    rank.push_back(0);
+    size.push_back(0);
+    cin>>n;
+    for(i=1;i<=n;i++){
+        parent.push_back(i);
+        rank.push_back(0);
+        size.push_back(1);
+    }
+    cin>>q;
+    while(q--){
+        cin>>ch;
+        switch(ch){
+            case 'M':
+                cin>>i_id>>j_id;
+                Union(parent, rank, i_id, j_id);
+                break;
+            case 'Q':
+                cin>>i_id;
+                a=Find(parent, i_id);
+                cout<<size[a]<<endl;
+                break;
+            default:
+                cout<<"wrong choice"<<endl;
+                break;
+        }
+    }
+    return 0;
+}
+
+void Union(vector<long int >& parent, vector<long int >& rank, long int i_id, long int j_id){
+    i_id=Find(parent, i_id);
+    j_id=Find(parent, j_id);
+    if(i_id==j_id)
+        return;
+    if(rank[i_id]>rank[j_id]){
+        parent[j_id]=i_id;
+        size[i_id]=size[i_id]+size[j_id];
+    }
+    else{
+        parent[i_id]=j_id;
+        size[j_id]=size[i_id]+size[j_id];
+        if(rank[i_id]==rank[j_id])
+            rank[j_id]=rank[j_id]+1;
+    }
+}
+
+long int Find(vector<long int >& parent, long int i_id){
+    if(i_id!=parent[i_id])
+        parent[i_id]=Find(parent, parent[i_id]);
+    return parent[i_id];
+}

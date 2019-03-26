@@ -1,0 +1,28 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+
+int main() {
+    long int q, type, x, c=0, d=0;
+    cin>>q;
+    long int a[q];
+    while(q--){
+        cin>>type;
+        switch(type){
+            case 1: 
+                cin>>x;
+                a[d]=x;
+                d++;
+                break;
+            case 2:
+                c++;
+                break;
+            case 3:
+                cout<<a[c]<<endl;
+                break;
+            default:
+                cout<<"Wrong Input"<<endl;
+        }
+    }
+    return 0;
+}
