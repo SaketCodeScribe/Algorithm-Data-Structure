@@ -31,31 +31,28 @@ int partition(vector<int> &arr,int low,int high,int pivot){
     return i;
 }
 
-int Rselect(vector<int> &arr,int low,int high,int k){
+void RQuicksort(vector<int> &arr,int low,int high){
     int pivot;
     srand(time(NULL));
-    if(low<high)
-    pivot=low+rand()%(high-low);
-    else pivot=low;
-    int p=partition(arr,low,high,pivot);
-    //cout<<"p="<<p<<endl;
-    if(p==k)
-    return k;
-    else if(p<k)
-        Rselect(arr,p+1,high,k);
-    else Rselect(arr,low,p-1,k);
+    if(low<high){
+        pivot=low+rand()%(high-low);
+        int p=partition(arr,low,high,pivot);
+        RQuicksort(arr,p+1,high);
+        RQuicksort(arr,low,p-1);
+    }
 }
 
 int main() {
-	int n,i,x,k;
+	int n,i,x;
 	vector<int> arr;
-	cin>>n>>k;
+	cin>>n;
 	for(i=0;i<n;i++){
 	    cin>>x;
 	    arr.push_back(x);
 	}
-	if(k>n||k<=0)
-	cout<<"Wrong input"<<endl;
-	else cout<<arr[Rselect(arr,0,n-1,k-1)]<<endl;
+	RQuicksort(arr,0,n-1);
+	for(i=0;i<n;i++)
+	cout<<arr[i]<<" ";
+    cout<<endl;
 	return 0;
 }
