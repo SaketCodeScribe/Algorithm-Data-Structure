@@ -34,8 +34,10 @@ int partition(vector<int> &arr,int low,int high,int pivot){
 void RQuicksort(vector<int> &arr,int low,int high){
     int pivot;
     srand(time(NULL));
-    if(low<high){
-        pivot=low+rand()%(high-low);
+    if(low<=high){
+        if(low==high)
+        pivot=low;
+        else pivot=low+rand()%(high-low);
         int p=partition(arr,low,high,pivot);
         RQuicksort(arr,p+1,high);
         RQuicksort(arr,low,p-1);
