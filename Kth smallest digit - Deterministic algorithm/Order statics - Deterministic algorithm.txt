@@ -71,7 +71,7 @@ int main() {
 	}
 	/*for(i=1;i<=k;i++)
 	cout<<i<<" : "<<DAlgo(arr,0,n-1,i-1)<<endl;*/
-	cout<<"The <<k<<"th smallest digit i is: "<<DAlgo(arr,0,n-1,k-1)<<endl;
+	cout<<"The "<<k<<"th smallest digit i is: "<<DAlgo(arr,0,n-1,k-1)<<endl;
 	sort(arr.begin(),arr.end());
 	for (i=0;i<n;i++)
     cout<<arr[i]<<" ";
