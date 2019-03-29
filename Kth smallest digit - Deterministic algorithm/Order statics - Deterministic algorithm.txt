@@ -41,7 +41,7 @@ int findmed(vector<int> arr,int low,int high){
 int DAlgo(vector<int> &arr,int low,int high,int k){
     int i,n,medofmed;
     vector<int> median;
-    if(low<high){
+    if(low<=high){
         n=high-low+1;
         for(i=0;i<n/5;i++)
         median.push_back(findmed(arr,low+i*5,low+i*5+4));
@@ -50,15 +50,15 @@ int DAlgo(vector<int> &arr,int low,int high,int k){
         i++;
         }
         medofmed=(i==1)?median[i-1]:DAlgo(median,0,i-1,i/2);
-    }
-    else medofmed=arr[low];
-    int pivot=partition(arr,low,high,medofmed);
-    if(pivot==k)    
-    return arr[pivot];
-    if (pivot<k)
-    return DAlgo(arr,pivot+1,high,k);
-    else if(pivot>k)   
-    return DAlgo(arr,low,pivot-1,k);
+        int pivot=partition(arr,low,high,medofmed);
+		if(pivot==k)    
+        return arr[pivot];
+        if (pivot<k)
+        return DAlgo(arr,pivot+1,high,k);
+        else if(pivot>k)   
+        return DAlgo(arr,low,pivot-1,k);
+		}
+    return INT_MAX;
 }
 
 int main() {
@@ -71,7 +71,7 @@ int main() {
 	}
 	/*for(i=1;i<=k;i++)
 	cout<<i<<" : "<<DAlgo(arr,0,n-1,i-1)<<endl;*/
-	cout<<"The 7th smallest digit is: "<<DAlgo(arr,0,n-1,k-1)<<endl;
+	cout<<"The 7th smallest digit i is: "<<DAlgo(arr,0,n-1,k-1)<<endl;
 	sort(arr.begin(),arr.end());
 	for (i=0;i<n;i++)
     cout<<arr[i]<<" ";
