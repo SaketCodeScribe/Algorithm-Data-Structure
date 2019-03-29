@@ -34,16 +34,19 @@ int partition(vector<int> &arr,int low,int high,int pivot){
 int Rselect(vector<int> &arr,int low,int high,int k){
     int pivot;
     srand(time(NULL));
-    if(low<high)
-    pivot=low+rand()%(high-low);
-    else pivot=low;
-    int p=partition(arr,low,high,pivot);
-    //cout<<"p="<<p<<endl;
-    if(p==k)
-    return k;
-    else if(p<k)
-        Rselect(arr,p+1,high,k);
-    else Rselect(arr,low,p-1,k);
+    if(low<=high){
+        if(low!=high)
+        pivot=low+rand()%(high-low);
+        else pivot=low;
+        int p=partition(arr,low,high,pivot);
+        //cout<<"p="<<p<<endl;
+        if(p==k)
+        return k;
+        else if(p<k)
+        return Rselect(arr,p+1,high,k);
+        else return Rselect(arr,low,p-1,k);
+    }
+    return INT_MAX;
 }
 
 int main() {
@@ -54,8 +57,13 @@ int main() {
 	    cin>>x;
 	    arr.push_back(x);
 	}
+	/*for(i=1;i<=k;i++)
+	cout<<i<<" : "<<arr[Rselect(arr,0,n-1,i-1)]<<endl;*/
 	if(k>n||k<=0)
 	cout<<"Wrong input"<<endl;
-	else cout<<arr[Rselect(arr,0,n-1,k-1)]<<endl;
+	else cout<<"The "<<k<<"th smallest digit i is: "<<arr[Rselect(arr,0,n-1,k-1)]<<endl;
+	sort(arr.begin(),arr.end());
+	for (i=0;i<n;i++)
+    cout<<arr[i]<<" ";
 	return 0;
 }
