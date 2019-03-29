@@ -19,7 +19,7 @@ int partition(vector<int> &arr,int p,int r){
 
 void quicksort(vector<int> &arr,int l,int r){
     int pi;
-    if(l<r){
+    if(l<=r){
         pi=partition(arr,l,r);
         quicksort(arr,l,pi-1);
         quicksort(arr,pi+1,r);
